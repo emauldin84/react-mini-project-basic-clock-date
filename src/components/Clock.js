@@ -1,32 +1,14 @@
-import React, {Component} from 'react'
-import moment from 'moment'
+import React from 'react'
 
-export default class Clock extends Component{
-    state = {
-        time: null,
-        date: null,
-    }
+let Clock = (props) => {
+    return(
+        <div>
+            <p className='clock'>{props.time}</p>
+            <p>{props.showTime ? props.date : null}</p>
+        </div>
+    )
+}
 
-    
-    componentDidMount() {
-        this.setState({
-            date: moment().format('ll')
-        })
-        setInterval(() => {
-            let time = moment().format('LTS');
-            this.setState({
-                time
-            })
-        }, 1000)
-    }
+export default Clock
 
-    render() {
-        return (
-            <div>
-                <p>{this.state.time}</p>
-                <p>{this.state.date}</p>
-                
-            </div>
-        )
-    }
-} 
+
