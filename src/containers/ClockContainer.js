@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 
-import CalendarToggle from '../components/CalendarToggle'
+
 import Clock from '../components/Clock'
 
 export default class ClockContainer extends Component {
@@ -32,10 +32,8 @@ export default class ClockContainer extends Component {
 
     render() {
         return (
-            <div className='container'>
-                <h3>Clock</h3>
-                <CalendarToggle toggle={this.handleDateToggler}/>
-                <Clock date={this.state.date} time={this.state.time} showTime={this.state.showTime}/>
+            <div className='d-flex justify-content-center align-items-center'>
+                    <Clock toggleDate={this.handleDateToggler} date={this.state.date} time={this.state.time} showTime={this.state.showTime}/>
             </div>
         )
     }
