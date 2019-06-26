@@ -4,11 +4,13 @@ import './App.css';
 import TimerInput from './components/TimerInput'
 import Timer from './components/Timer'
 import StartStopButton from './components/StartStopButton'
+import ResetButton from './components/ResetButton'
 
 class App extends Component{
   state = {
     time: 0,
     displayInput: true,
+    timeRunning: null,
   }
 
   handleInputChange = (e) => {
@@ -17,16 +19,37 @@ class App extends Component{
     })
   }
 
-  handleStartTimer = () => {
-    setInterval(() => {
-      this.setState((prevState) => { 
-        return {time: prevState.time - 1}
-      })
-    }, 1000)
+  // countDownHandler = setInterval(() => {
+  //   this.setState((prevState) => { 
+  //     return {time: prevState.time - 1}
+  //   })
+  // }, 1000)
+
+  handleStartStopTimer = () => {
+    if(this.state.time > 0){
+
+      if (!this.state.timeRunning) {
+        this.setState((prevState) => {return {timeRunning: !prevState.timeRunning}})
+        this.timer = setInterval(() => {
+          this.setState((prevState) => { 
+            return {time: prevState.time - 1}
+          })
+        }, 1000)
+      } 
+      if (this.state.timeRunning) {
+        this.setState((prevState) => {return {timeRunning: !prevState.timeRunning}})
+        clearInterval(this.timer)
+      }
+
+    }
   }
   
-  handleStopTimer = () => {
-    clearInterval(this.handleStartTimer)
+  handleClearTimer = () => {
+    clearInterval(this.timer)
+    this.setState({
+      time: 0,
+      timeRunning: false,
+    })
   }
 
   render() {
@@ -47,11 +70,13 @@ class App extends Component{
             </div>
             
             <div className='controls'>
-              <div>start/stop button</div>
+              
               <StartStopButton 
-              start={this.handleStartTimer}
-              stop={this.handleStopTimer}/>
-              <div>reset button</div>
+              startStop={this.handleStartStopTimer}
+              status={this.state.timeRunning}/>
+              
+              <ResetButton clearTimer={this.handleClearTimer}/>
+
             </div>
   
           </div>
